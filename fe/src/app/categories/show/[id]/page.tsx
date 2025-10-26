@@ -2,12 +2,13 @@
 
 import { Show, TextField } from "@refinedev/antd";
 import { useShow } from "@refinedev/core";
+import { Category } from "@sdk/hey-api";
 import { Typography } from "antd";
 
 const { Title } = Typography;
 
 export default function CategoryShow() {
-  const { result: record, query } = useShow({});
+  const { result: record, query } = useShow<Category>({});
   const { isLoading } = query;
 
   return (
