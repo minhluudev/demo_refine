@@ -25,9 +25,9 @@ export default function BlogPostList() {
         value: params.title ?? null,
       },
       {
-        field: "category",
+        field: "category_id",
         operator: "eq",
-        value: params.category ?? null,
+        value: params.category_id ?? null,
       },
     ],
   });

@@ -5,10 +5,17 @@ import { useState } from "react";
 
 type PropsType = {
   defaultValue?: number;
+  defaultFetchData?: boolean;
 } & Omit<SelectProps, "options">;
 
-const CategorySelect: React.FC<PropsType> = ({ defaultValue, ...rest }) => {
-  const [isActiveFetchData, setIsActiveFetchData] = useState(false);
+const CategorySelect: React.FC<PropsType> = ({
+  defaultValue,
+  defaultFetchData,
+  ...rest
+}) => {
+  const [isActiveFetchData, setIsActiveFetchData] = useState<boolean>(
+    !!defaultValue || !!defaultFetchData
+  );
 
   const { selectProps: categorySelectProps, query } = useSelect({
     resource: "categories",
@@ -29,6 +36,7 @@ const CategorySelect: React.FC<PropsType> = ({ defaultValue, ...rest }) => {
 
     if (target.scrollTop + target.offsetHeight >= target.scrollHeight - 10) {
       // Fetching next page
+      console.log("Fetching...");
     }
   };
 
@@ -36,7 +44,9 @@ const CategorySelect: React.FC<PropsType> = ({ defaultValue, ...rest }) => {
     <Select
       {...categorySelectProps}
       {...rest}
+      allowClear
       showSearch
+      loading={query.isLoading}
       notFoundContent={query.isLoading ? <Spin size="small" /> : null}
       onFocus={() => setIsActiveFetchData(true)}
       onPopupScroll={handleScroll}
