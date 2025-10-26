@@ -3,14 +3,23 @@
 import { z } from "zod";
 
 export const zCategoryRequest = z.object({
-  title: z.string(),
+  title: z.string().max(255).register(z.globalRegistry, {
+    description:
+      "required:Tên danh mục là bắt buộc.|max: Tên danh mục không vượt quá 255 ký tự.",
+  }),
   description: z.optional(z.union([z.string(), z.null()])),
 });
 
 export const zPostRequest = z.object({
-  title: z.string().max(255),
+  title: z.string().max(255).register(z.globalRegistry, {
+    description: "Tiêu đề bài viết. Bắt buộc, tối đa 255 ký tự.",
+  }),
   content: z.optional(z.union([z.string(), z.null()])),
-  category_id: z.int(),
+  category_id: z.int().register(z.globalRegistry, {
+    description:
+      "ID danh mục mà bài viết thuộc về. Bắt buộc, phải tồn tại trong bảng categories.",
+  }),
+  tags: z.optional(z.union([z.array(z.string().min(2)), z.null()])),
 });
 
 /**
@@ -27,8 +36,9 @@ export const zCategory = z.object({
 export const zPost = z.object({
   id: z.optional(z.int()),
   title: z.optional(z.string()),
-  content: z.optional(z.string()),
+  content: z.optional(z.union([z.string(), z.null()])),
   category_id: z.optional(z.int()),
+  tags: z.optional(z.union([z.array(z.string()), z.null()])),
   category: z.optional(zCategory),
 });
 
@@ -47,124 +57,4 @@ export const zPaginationMeta = z.object({
   per_page: z.optional(z.int()),
   to: z.optional(z.int()),
   total: z.optional(z.int()),
-});
-
-export const zAc9C4D978Ea4E5B72915Ca9728E5B8B1Data = z.object({
-  body: z.optional(z.never()),
-  path: z.optional(z.never()),
-  query: z.optional(
-    z.object({
-      page: z.optional(z.int()),
-      per_page: z.optional(z.int()),
-    })
-  ),
-});
-
-/**
- * Danh sách danh mục (phân trang)
- */
-export const zAc9C4D978Ea4E5B72915Ca9728E5B8B1Response = z.object({
-  data: z.optional(z.array(zCategory)),
-  links: z.optional(zPaginationLinks),
-  meta: z.optional(zPaginationMeta),
-});
-
-export const zCca49A87D9B0Ebb9A98Ad7C154B71737Data = z.object({
-  body: zCategoryRequest,
-  path: z.optional(z.never()),
-  query: z.optional(z.never()),
-});
-
-/**
- * Tạo thành công
- */
-export const zCca49A87D9B0Ebb9A98Ad7C154B71737Response = zCategory;
-
-export const zB61B65823F4A21F182506B34Ddf805cData = z.object({
-  body: z.optional(z.never()),
-  path: z.object({
-    id: z.int(),
-  }),
-  query: z.optional(z.never()),
-});
-
-export const zBb2E47Dde77Dd1E2591428B0Ae1Data = z.object({
-  body: z.optional(z.never()),
-  path: z.object({
-    id: z.int(),
-  }),
-  query: z.optional(z.never()),
-});
-
-/**
- * Chi tiết danh mục
- */
-export const zBb2E47Dde77Dd1E2591428B0Ae1Response = zCategory;
-
-export const zDcf71887E585De7F881E9Eb98D86126Data = z.object({
-  body: zCategoryRequest,
-  path: z.object({
-    id: z.int(),
-  }),
-  query: z.optional(z.never()),
-});
-
-/**
- * Cập nhật thành công
- */
-export const zDcf71887E585De7F881E9Eb98D86126Response = zCategory;
-
-export const zFda362E2E082B5357Ac416E7767E435Data = z.object({
-  body: z.optional(z.never()),
-  path: z.optional(z.never()),
-  query: z.optional(
-    z.object({
-      page: z.optional(z.int()),
-      per_page: z.optional(z.int()),
-    })
-  ),
-});
-
-/**
- * Danh sách bài viết (phân trang)
- */
-export const zFda362E2E082B5357Ac416E7767E435Response = z.object({
-  data: z.optional(z.array(zPost)),
-  links: z.optional(zPaginationLinks),
-  meta: z.optional(zPaginationMeta),
-});
-
-export const zDcb66200C3132996151884Ac232Cf439Data = z.object({
-  body: zPostRequest,
-  path: z.optional(z.never()),
-  query: z.optional(z.never()),
-});
-
-export const zD99F2E42Af2F722A058A86245Aa856fData = z.object({
-  body: z.optional(z.never()),
-  path: z.object({
-    id: z.int(),
-  }),
-  query: z.optional(z.never()),
-});
-
-/**
- * Xoá thành công
- */
-export const zD99F2E42Af2F722A058A86245Aa856fResponse = z.void();
-
-export const zB5Adb0520Cca80Cedfe09D9298332Data = z.object({
-  body: z.optional(z.never()),
-  path: z.object({
-    id: z.int(),
-  }),
-  query: z.optional(z.never()),
-});
-
-export const zF4Bed0846D9350903D8A17C7B503aData = z.object({
-  body: zPostRequest,
-  path: z.object({
-    id: z.int(),
-  }),
-  query: z.optional(z.never()),
 });

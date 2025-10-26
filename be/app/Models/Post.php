@@ -13,8 +13,17 @@ use Illuminate\Database\Eloquent\Model;
  *     type="object",
  *     @OA\Property(property="id", type="integer", example=1),
  *     @OA\Property(property="title", type="string", example="Hello World"),
- *     @OA\Property(property="content", type="string", example="This is a test post"),
+ *     @OA\Property(property="content", type="string",nullable=true, example="This is a test post"),
  *     @OA\Property(property="category_id", type="integer", example=1),
+ *     @OA\Property(
+ *          property="tags",
+ *          type="array",
+ *          nullable=true,
+ *          @OA\Items(
+ *             type="string",
+ *             example="laravel"
+ *         ),
+ *     ),
  *     @OA\Property(
  *         property="category",
  *         ref="#/components/schemas/Category"
@@ -26,6 +35,10 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = ['category_id', 'title', 'content', 'tags'];
+
+    protected $casts = [
+        'tags' => 'array',
+    ];
 
     public function category()
     {

@@ -23,6 +23,7 @@ class PostResource extends JsonResource
                 'id' => $this->category->id,
                 'title' => $this->category->title,
             ],
+            'tags' => $this->tags,
             'created_at' => $this->created_at->toDateTimeString(),
         ];
     }

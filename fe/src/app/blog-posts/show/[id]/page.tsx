@@ -2,24 +2,29 @@
 
 import { DateField, MarkdownField, Show, TextField } from "@refinedev/antd";
 import { useOne, useShow } from "@refinedev/core";
-import { Typography } from "antd";
+import { Post } from "@sdk/hey-api";
+import { Tag, Typography } from "antd";
 
 const { Title } = Typography;
 
 export default function BlogPostShow() {
-  const { result: record, query } = useShow({});
+  const { result: record, query } = useShow<Post>({});
   const { isLoading } = query;
 
   return (
     <Show isLoading={isLoading}>
       <Title level={5}>{"ID"}</Title>
-      <TextField value={record?.id} />
+      <Typography>{record?.id}</Typography>
       <Title level={5}>{"Title"}</Title>
-      <TextField value={record?.title} />
+      <Typography>{record?.title}</Typography>
       <Title level={5}>{"Content"}</Title>
-      <MarkdownField value={record?.content} />
+      <Typography>{record?.content}</Typography>
       <Title level={5}>{"Category"}</Title>
-      <TextField value={record?.category?.title} />
+      <Typography>{record?.category?.title}</Typography>
+      <Title level={5}>{"Tags"}</Title>
+      {record?.tags?.map((tag, index) => (
+        <Tag key={index}>{tag}</Tag>
+      ))}
     </Show>
   );
 }

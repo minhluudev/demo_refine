@@ -271,7 +271,52 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Tạo bài viết thành công"
+                        "description": "Tạo bài viết thành công",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Post"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Lỗi xác thực dữ liệu (Validation Error)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "Trường title là bắt buộc."
+                                                    }
+                                                },
+                                                "category_id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "Danh mục không tồn tại."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Lỗi server nội bộ"
                     }
                 }
             }
@@ -295,10 +340,30 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Chi tiết bài viết"
+                        "description": "Chi tiết bài viết",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Post"
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Không tìm thấy"
+                        "description": "Không tìm thấy bài viết",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Không tìm thấy bài viết."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -366,8 +431,9 @@
                 ],
                 "properties": {
                     "title": {
-                        "description": "Tên danh mục là bắt buộc, tối đa 255 ký tự.",
+                        "description": "required:Tên danh mục là bắt buộc.|max: Tên danh mục không vượt quá 255 ký tự.",
                         "type": "string",
+                        "maxLength": 255,
                         "example": "Điện thoại"
                     },
                     "description": {
@@ -401,6 +467,16 @@
                         "description": "ID danh mục mà bài viết thuộc về. Bắt buộc, phải tồn tại trong bảng categories.",
                         "type": "integer",
                         "example": 1
+                    },
+                    "tags": {
+                        "description": "Danh sách các thẻ (tags) — có thể bỏ trống, mỗi thẻ phải là chuỗi có ít nhất 2 ký tự.",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "minLength": 2,
+                            "example": "laravel"
+                        },
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -446,11 +522,20 @@
                     },
                     "content": {
                         "type": "string",
-                        "example": "This is a test post"
+                        "example": "This is a test post",
+                        "nullable": true
                     },
                     "category_id": {
                         "type": "integer",
                         "example": 1
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "laravel"
+                        },
+                        "nullable": true
                     },
                     "category": {
                         "$ref": "#/components/schemas/Category"

@@ -28,7 +28,18 @@ use Illuminate\Foundation\Http\FormRequest;
  *         type="integer",
  *         example=1,
  *         description="ID danh mục mà bài viết thuộc về. Bắt buộc, phải tồn tại trong bảng categories."
- *     )
+ *     ),
+ *     @OA\Property(
+ *         property="tags",
+ *         type="array",
+ *         nullable=true,
+ *         description="Danh sách các thẻ (tags) — có thể bỏ trống, mỗi thẻ phải là chuỗi có ít nhất 2 ký tự.",
+ *         @OA\Items(
+ *             type="string",
+ *             minLength=2,
+ *             example="laravel"
+ *         )
+ *      )
  * )
  */
 class PostRequest extends FormRequest
@@ -45,6 +56,8 @@ class PostRequest extends FormRequest
             'title' => 'required|string|max:255',
             'content' => 'nullable|string',
             'category_id' => 'required|integer|exists:categories,id',
+            'tags' => 'nullable|array',
+            'tags.*' => 'string|min:2',
         ];
     }
 
@@ -58,6 +71,9 @@ class PostRequest extends FormRequest
             'category_id.required' => 'Danh mục là bắt buộc.',
             'category_id.integer' => 'ID danh mục phải là số nguyên.',
             'category_id.exists' => 'Danh mục được chọn không tồn tại.',
+            'tags.array' => 'Tags phải là một mảng.',
+            'tags.*.string' => 'Mỗi tag phải là chuỗi ký tự.',
+            'tags.*.min' => 'Mỗi tag phải có ít nhất 2 ký tự.',
         ];
     }
 }

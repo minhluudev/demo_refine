@@ -62,7 +62,24 @@ class PostController extends Controller
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/PostRequest")
      *     ),
-     *     @OA\Response(response=201, description="Tạo bài viết thành công")
+     *     @OA\Response(
+     *         response=201,
+     *         description="Tạo bài viết thành công",
+     *         @OA\JsonContent(ref="#/components/schemas/Post")
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Lỗi xác thực dữ liệu (Validation Error)",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="The given data was invalid."),
+     *             @OA\Property(property="errors", type="object",
+     *                 @OA\Property(property="title", type="array", @OA\Items(type="string", example="Trường title là bắt buộc.")),
+     *                 @OA\Property(property="category_id", type="array", @OA\Items(type="string", example="Danh mục không tồn tại."))
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response=500, description="Lỗi server nội bộ")
      * )
      */
     public function store(PostRequest $request)
@@ -84,8 +101,19 @@ class PostController extends Controller
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response=200, description="Chi tiết bài viết"),
-     *     @OA\Response(response=404, description="Không tìm thấy")
+     *     @OA\Response(
+     *         response=200,
+     *         description="Chi tiết bài viết",
+     *         @OA\JsonContent(ref="#/components/schemas/Post")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Không tìm thấy bài viết",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Không tìm thấy bài viết.")
+     *         )
+     *     )
      * )
      */
     public function show(Post $post)
