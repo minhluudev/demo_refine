@@ -2,15 +2,10 @@
 
 import {
   type ClientOptions,
-  type ClientOptions as ClientOptions3,
   type Config,
-  type Config as Config2,
   createClient,
-  createClient as createClient2,
   createConfig,
-  createConfig as createConfig2,
 } from "./client";
-import { createClientConfig } from "./src/lib/hey-api.ts";
 import type { ClientOptions as ClientOptions2 } from "./types.gen";
 
 /**
@@ -26,19 +21,3 @@ export type CreateClientConfig<T extends ClientOptions = ClientOptions2> = (
 ) => Config<Required<ClientOptions> & T>;
 
 export const client = createClient(createConfig<ClientOptions2>());
-
-/**
- * The `createClientConfig()` function will be called on client initialization
- * and the returned object will become the client's initial configuration.
- *
- * You may want to initialize your client this way instead of calling
- * `setConfig()`. This is useful for example if you're using Next.js
- * to ensure your client always has the correct values.
- */
-export type CreateClientConfig2<T extends ClientOptions3 = ClientOptions2> = (
-  override?: Config2<ClientOptions3 & T>
-) => Config2<Required<ClientOptions3> & T>;
-
-export const client2 = createClient2(
-  createClientConfig(createConfig2<ClientOptions2>())
-);

@@ -6,7 +6,7 @@ export type ClientOptions = {
 
 export type CategoryRequest = {
   /**
-   * Tên danh mục là bắt buộc, tối đa 255 ký tự.
+   * required:Tên danh mục là bắt buộc.|max: Tên danh mục không vượt quá 255 ký tự.
    */
   title: string;
   /**
@@ -28,6 +28,10 @@ export type PostRequest = {
    * ID danh mục mà bài viết thuộc về. Bắt buộc, phải tồn tại trong bảng categories.
    */
   category_id: number;
+  /**
+   * Danh sách các thẻ (tags) — có thể bỏ trống, mỗi thẻ phải là chuỗi có ít nhất 2 ký tự.
+   */
+  tags?: Array<string> | null;
 };
 
 /**
@@ -44,8 +48,9 @@ export type Category = {
 export type Post = {
   id?: number;
   title?: string;
-  content?: string;
+  content?: string | null;
   category_id?: number;
+  tags?: Array<string> | null;
   category?: Category;
 };
 
@@ -235,12 +240,35 @@ export type Dcb66200C3132996151884Ac232Cf439Data = {
   url: "/api/posts";
 };
 
+export type Dcb66200C3132996151884Ac232Cf439Errors = {
+  /**
+   * Lỗi xác thực dữ liệu (Validation Error)
+   */
+  422: {
+    message?: string;
+    errors?: {
+      title?: Array<string>;
+      category_id?: Array<string>;
+    };
+  };
+  /**
+   * Lỗi server nội bộ
+   */
+  500: unknown;
+};
+
+export type Dcb66200C3132996151884Ac232Cf439Error =
+  Dcb66200C3132996151884Ac232Cf439Errors[keyof Dcb66200C3132996151884Ac232Cf439Errors];
+
 export type Dcb66200C3132996151884Ac232Cf439Responses = {
   /**
    * Tạo bài viết thành công
    */
-  201: unknown;
+  201: Post;
 };
+
+export type Dcb66200C3132996151884Ac232Cf439Response =
+  Dcb66200C3132996151884Ac232Cf439Responses[keyof Dcb66200C3132996151884Ac232Cf439Responses];
 
 export type D99F2E42Af2F722A058A86245Aa856fData = {
   body?: never;
@@ -272,17 +300,25 @@ export type B5Adb0520Cca80Cedfe09D9298332Data = {
 
 export type B5Adb0520Cca80Cedfe09D9298332Errors = {
   /**
-   * Không tìm thấy
+   * Không tìm thấy bài viết
    */
-  404: unknown;
+  404: {
+    message?: string;
+  };
 };
+
+export type B5Adb0520Cca80Cedfe09D9298332Error =
+  B5Adb0520Cca80Cedfe09D9298332Errors[keyof B5Adb0520Cca80Cedfe09D9298332Errors];
 
 export type B5Adb0520Cca80Cedfe09D9298332Responses = {
   /**
    * Chi tiết bài viết
    */
-  200: unknown;
+  200: Post;
 };
+
+export type B5Adb0520Cca80Cedfe09D9298332Response =
+  B5Adb0520Cca80Cedfe09D9298332Responses[keyof B5Adb0520Cca80Cedfe09D9298332Responses];
 
 export type F4Bed0846D9350903D8A17C7B503aData = {
   body: PostRequest;

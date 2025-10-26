@@ -20,6 +20,7 @@ import type {
   D99F2E42Af2F722A058A86245Aa856fData,
   D99F2E42Af2F722A058A86245Aa856fResponses,
   Dcb66200C3132996151884Ac232Cf439Data,
+  Dcb66200C3132996151884Ac232Cf439Errors,
   Dcb66200C3132996151884Ac232Cf439Responses,
   Dcf71887E585De7F881E9Eb98D86126Data,
   Dcf71887E585De7F881E9Eb98D86126Errors,
@@ -29,18 +30,6 @@ import type {
   Fda362E2E082B5357Ac416E7767E435Data,
   Fda362E2E082B5357Ac416E7767E435Responses,
 } from "./types.gen";
-import {
-  zAc9C4D978Ea4E5B72915Ca9728E5B8B1Data,
-  zB5Adb0520Cca80Cedfe09D9298332Data,
-  zB61B65823F4A21F182506B34Ddf805cData,
-  zBb2E47Dde77Dd1E2591428B0Ae1Data,
-  zCca49A87D9B0Ebb9A98Ad7C154B71737Data,
-  zD99F2E42Af2F722A058A86245Aa856fData,
-  zDcb66200C3132996151884Ac232Cf439Data,
-  zDcf71887E585De7F881E9Eb98D86126Data,
-  zF4Bed0846D9350903D8A17C7B503aData,
-  zFda362E2E082B5357Ac416E7767E435Data,
-} from "./zod.gen";
 
 export type Options<
   TData extends TDataShape = TDataShape,
@@ -72,9 +61,6 @@ export const ac9C4D978Ea4E5B72915Ca9728E5B8B1 = <
     unknown,
     ThrowOnError
   >({
-    requestValidator: async (data) => {
-      return await zAc9C4D978Ea4E5B72915Ca9728E5B8B1Data.parseAsync(data);
-    },
     url: "/api/categories",
     ...options,
   });
@@ -93,9 +79,6 @@ export const cca49A87D9B0Ebb9A98Ad7C154B71737 = <
     Cca49A87D9B0Ebb9A98Ad7C154B71737Errors,
     ThrowOnError
   >({
-    requestValidator: async (data) => {
-      return await zCca49A87D9B0Ebb9A98Ad7C154B71737Data.parseAsync(data);
-    },
     url: "/api/categories",
     ...options,
     headers: {
@@ -118,9 +101,6 @@ export const b61B65823F4A21F182506B34Ddf805C = <
     B61B65823F4A21F182506B34Ddf805cErrors,
     ThrowOnError
   >({
-    requestValidator: async (data) => {
-      return await zB61B65823F4A21F182506B34Ddf805cData.parseAsync(data);
-    },
     url: "/api/categories/{id}",
     ...options,
   });
@@ -139,9 +119,6 @@ export const bb2E47Dde77Dd1E2591428B0Ae1 = <
     Bb2E47Dde77Dd1E2591428B0Ae1Errors,
     ThrowOnError
   >({
-    requestValidator: async (data) => {
-      return await zBb2E47Dde77Dd1E2591428B0Ae1Data.parseAsync(data);
-    },
     url: "/api/categories/{id}",
     ...options,
   });
@@ -160,9 +137,6 @@ export const dcf71887E585De7F881E9Eb98D86126 = <
     Dcf71887E585De7F881E9Eb98D86126Errors,
     ThrowOnError
   >({
-    requestValidator: async (data) => {
-      return await zDcf71887E585De7F881E9Eb98D86126Data.parseAsync(data);
-    },
     url: "/api/categories/{id}",
     ...options,
     headers: {
@@ -185,9 +159,6 @@ export const fda362E2E082B5357Ac416E7767E435 = <
     unknown,
     ThrowOnError
   >({
-    requestValidator: async (data) => {
-      return await zFda362E2E082B5357Ac416E7767E435Data.parseAsync(data);
-    },
     url: "/api/posts",
     ...options,
   });
@@ -203,12 +174,9 @@ export const dcb66200C3132996151884Ac232Cf439 = <
 ) => {
   return (options.client ?? client).post<
     Dcb66200C3132996151884Ac232Cf439Responses,
-    unknown,
+    Dcb66200C3132996151884Ac232Cf439Errors,
     ThrowOnError
   >({
-    requestValidator: async (data) => {
-      return await zDcb66200C3132996151884Ac232Cf439Data.parseAsync(data);
-    },
     url: "/api/posts",
     ...options,
     headers: {
@@ -231,9 +199,6 @@ export const d99F2E42Af2F722A058A86245Aa856F = <
     unknown,
     ThrowOnError
   >({
-    requestValidator: async (data) => {
-      return await zD99F2E42Af2F722A058A86245Aa856fData.parseAsync(data);
-    },
     url: "/api/posts/{id}",
     ...options,
   });
@@ -252,9 +217,6 @@ export const b5Adb0520Cca80Cedfe09D9298332 = <
     B5Adb0520Cca80Cedfe09D9298332Errors,
     ThrowOnError
   >({
-    requestValidator: async (data) => {
-      return await zB5Adb0520Cca80Cedfe09D9298332Data.parseAsync(data);
-    },
     url: "/api/posts/{id}",
     ...options,
   });
@@ -273,9 +235,6 @@ export const f4Bed0846D9350903D8A17C7B503A = <
     unknown,
     ThrowOnError
   >({
-    requestValidator: async (data) => {
-      return await zF4Bed0846D9350903D8A17C7B503aData.parseAsync(data);
-    },
     url: "/api/posts/{id}",
     ...options,
     headers: {

@@ -12,8 +12,9 @@ use Illuminate\Foundation\Http\FormRequest;
  *     @OA\Property(
  *         property="title",
  *         type="string",
+ *         maxLength=255,
  *         example="Điện thoại",
- *         description="Tên danh mục là bắt buộc, tối đa 255 ký tự."
+ *         description="required:Tên danh mục là bắt buộc.|max: Tên danh mục không vượt quá 255 ký tự."
  *     ),
  *     @OA\Property(
  *         property="description",
@@ -45,7 +46,6 @@ class CategoryRequest extends FormRequest
             'title.required' => 'Tên danh mục là bắt buộc.',
             'title.string' => 'Tên danh mục phải là chuỗi.',
             'title.max' => 'Tên danh mục không vượt quá 255 ký tự.',
-            'title.unique' => 'Tên danh mục đã tồn tại.',
             'description.string' => 'Mô tả phải là chuỗi.',
         ];
     }
