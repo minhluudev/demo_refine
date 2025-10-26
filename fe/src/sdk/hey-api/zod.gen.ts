@@ -12,14 +12,24 @@ export const zCategoryRequest = z.object({
 
 export const zPostRequest = z.object({
   title: z.string().max(255).register(z.globalRegistry, {
-    description: "Tiêu đề bài viết. Bắt buộc, tối đa 255 ký tự.",
+    description:
+      "required:Tiêu đề là bắt buộc.|string:Tiêu đề là bắt buộc.|max:Tiêu đề không được quá 255 ký tự.",
   }),
   content: z.optional(z.union([z.string(), z.null()])),
   category_id: z.int().register(z.globalRegistry, {
-    description:
-      "ID danh mục mà bài viết thuộc về. Bắt buộc, phải tồn tại trong bảng categories.",
+    description: "required:Danh mục là bắt buộc.",
   }),
-  tags: z.optional(z.union([z.array(z.string().min(2)), z.null()])),
+  tags: z.optional(
+    z.union([
+      z.array(
+        z.string().min(2).register(z.globalRegistry, {
+          description:
+            "string:Mỗi tag phải là chuỗi ký tự.|min:Mỗi tag phải có ít nhất 2 ký tự.",
+        })
+      ),
+      z.null(),
+    ])
+  ),
 });
 
 /**

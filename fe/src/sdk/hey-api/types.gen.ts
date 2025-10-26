@@ -14,7 +14,7 @@ export type CategoryRequest = {
 
 export type PostRequest = {
   /**
-   * Tiêu đề bài viết. Bắt buộc, tối đa 255 ký tự.
+   * required:Tiêu đề là bắt buộc.|string:Tiêu đề là bắt buộc.|max:Tiêu đề không được quá 255 ký tự.
    */
   title: string;
   /**
@@ -22,11 +22,11 @@ export type PostRequest = {
    */
   content?: string | null;
   /**
-   * ID danh mục mà bài viết thuộc về. Bắt buộc, phải tồn tại trong bảng categories.
+   * required:Danh mục là bắt buộc.
    */
   category_id: number;
   /**
-   * Danh sách các thẻ (tags) — có thể bỏ trống, mỗi thẻ phải là chuỗi có ít nhất 2 ký tự.
+   * array:Tags phải là một mảng.
    */
   tags?: Array<string> | null;
 };

@@ -14,7 +14,7 @@ use Illuminate\Foundation\Http\FormRequest;
  *         type="string",
  *         maxLength=255,
  *         example="Bài viết về công nghệ",
- *         description="Tiêu đề bài viết. Bắt buộc, tối đa 255 ký tự."
+ *         description="required:Tiêu đề là bắt buộc.|string:Tiêu đề là bắt buộc.|max:Tiêu đề không được quá 255 ký tự."
  *     ),
  *     @OA\Property(
  *         property="content",
@@ -27,17 +27,18 @@ use Illuminate\Foundation\Http\FormRequest;
  *         property="category_id",
  *         type="integer",
  *         example=1,
- *         description="ID danh mục mà bài viết thuộc về. Bắt buộc, phải tồn tại trong bảng categories."
+ *         description="required:Danh mục là bắt buộc."
  *     ),
  *     @OA\Property(
  *         property="tags",
  *         type="array",
  *         nullable=true,
- *         description="Danh sách các thẻ (tags) — có thể bỏ trống, mỗi thẻ phải là chuỗi có ít nhất 2 ký tự.",
+ *         description="array:Tags phải là một mảng.",
  *         @OA\Items(
  *             type="string",
  *             minLength=2,
- *             example="laravel"
+ *             example="laravel",
+ *             description="string:Mỗi tag phải là chuỗi ký tự.|min:Mỗi tag phải có ít nhất 2 ký tự."
  *         )
  *      )
  * )
