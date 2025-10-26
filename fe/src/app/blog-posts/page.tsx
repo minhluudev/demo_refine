@@ -44,7 +44,7 @@ export default function BlogPostList() {
 
   return (
     <List>
-      <Table {...tableProps} columns={columns} />
+      <Table {...tableProps} columns={columns} loading={tableProps.loading} />
     </List>
   );
 }

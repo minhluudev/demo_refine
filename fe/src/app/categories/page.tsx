@@ -42,7 +42,7 @@ export default function CategoryList() {
 
   return (
     <List>
-      <Table {...tableProps} columns={columns} />
+      <Table {...tableProps} columns={columns} loading={tableProps.loading}/>
     </List>
   );
 }
