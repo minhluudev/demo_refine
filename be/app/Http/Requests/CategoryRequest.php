@@ -14,14 +14,13 @@ use Illuminate\Foundation\Http\FormRequest;
  *         type="string",
  *         maxLength=255,
  *         example="Điện thoại",
- *         description="required:Tên danh mục là bắt buộc.|max: Tên danh mục không vượt quá 255 ký tự."
+ *         description="required:Tên danh mục là bắt buộc.|type:Tên danh mục phải là chuỗi .|max: Tên danh mục không vượt quá 255 ký tự."
  *     ),
  *     @OA\Property(
  *         property="description",
  *         type="string",
  *         nullable=true,
- *         example="Danh mục sản phẩm công nghệ",
- *         description="Mô tả ngắn cho danh mục (không bắt buộc)."
+ *         example="Danh mục sản phẩm công nghệ"
  *     )
  * )
  */

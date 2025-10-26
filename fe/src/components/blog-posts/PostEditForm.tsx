@@ -61,7 +61,7 @@ const PostEditForm: React.FC<Props> = ({ formType }) => {
             required
             rules={[zodRule(zPostRequest.shape.category_id)]}
           >
-            <Select {...categorySelectProps} />
+            <Select {...categorySelectProps} showSearch />
           </Form.Item>
           <Form.Item
             label="Tags"

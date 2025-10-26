@@ -5,7 +5,7 @@ import { z } from "zod";
 export const zCategoryRequest = z.object({
   title: z.string().max(255).register(z.globalRegistry, {
     description:
-      "required:Tên danh mục là bắt buộc.|max: Tên danh mục không vượt quá 255 ký tự.",
+      "required:Tên danh mục là bắt buộc.|type:Tên danh mục phải là chuỗi .|max: Tên danh mục không vượt quá 255 ký tự.",
   }),
   description: z.optional(z.union([z.string(), z.null()])),
 });

@@ -431,13 +431,12 @@
                 ],
                 "properties": {
                     "title": {
-                        "description": "required:Tên danh mục là bắt buộc.|max: Tên danh mục không vượt quá 255 ký tự.",
+                        "description": "required:Tên danh mục là bắt buộc.|type:Tên danh mục phải là chuỗi .|max: Tên danh mục không vượt quá 255 ký tự.",
                         "type": "string",
                         "maxLength": 255,
                         "example": "Điện thoại"
                     },
                     "description": {
-                        "description": "Mô tả ngắn cho danh mục (không bắt buộc).",
                         "type": "string",
                         "example": "Danh mục sản phẩm công nghệ",
                         "nullable": true

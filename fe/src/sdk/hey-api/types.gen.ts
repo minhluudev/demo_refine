@@ -6,12 +6,9 @@ export type ClientOptions = {
 
 export type CategoryRequest = {
   /**
-   * required:Tên danh mục là bắt buộc.|max: Tên danh mục không vượt quá 255 ký tự.
+   * required:Tên danh mục là bắt buộc.|type:Tên danh mục phải là chuỗi .|max: Tên danh mục không vượt quá 255 ký tự.
    */
   title: string;
-  /**
-   * Mô tả ngắn cho danh mục (không bắt buộc).
-   */
   description?: string | null;
 };
 
