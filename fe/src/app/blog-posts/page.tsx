@@ -1,21 +1,35 @@
 "use client";
 
+import SearchForm from "@components/blog-posts/SearchForm";
 import {
-  DateField,
   DeleteButton,
   EditButton,
   List,
-  MarkdownField,
   ShowButton,
   useTable,
 } from "@refinedev/antd";
 import { type BaseRecord } from "@refinedev/core";
-import { Space, Table } from "antd";
+import { Divider, Space, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 
 export default function BlogPostList() {
-  const { tableProps } = useTable({
-    syncWithLocation: true,
+  const { tableProps, searchFormProps } = useTable({
+    // syncWithLocation: true,
+    // filters: {
+    // 	mode: 'server'
+    // },
+    onSearch: (params: any) => [
+      {
+        field: "title",
+        operator: "eq",
+        value: params.title ?? null,
+      },
+      {
+        field: "category",
+        operator: "eq",
+        value: params.category ?? null,
+      },
+    ],
   });
 
   const columns: ColumnsType = [
@@ -44,6 +58,8 @@ export default function BlogPostList() {
 
   return (
     <List>
+      <SearchForm searchFormProps={searchFormProps} />
+      <Divider />
       <Table {...tableProps} columns={columns} loading={tableProps.loading} />
     </List>
   );

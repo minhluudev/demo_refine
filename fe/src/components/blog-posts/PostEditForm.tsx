@@ -1,3 +1,4 @@
+import CategorySelect from "@components/common/CategorySelect";
 import {
   Breadcrumb,
   PageHeader,
@@ -21,11 +22,6 @@ const PostEditForm: React.FC<Props> = ({ formType }) => {
   });
 
   const blogPostsData = query?.data?.data;
-
-  const { selectProps: categorySelectProps } = useSelect({
-    resource: "categories",
-    defaultValue: blogPostsData?.category?.id,
-  });
 
   return (
     <>
@@ -61,7 +57,7 @@ const PostEditForm: React.FC<Props> = ({ formType }) => {
             required
             rules={[zodRule(zPostRequest.shape.category_id)]}
           >
-            <Select {...categorySelectProps} showSearch />
+            <CategorySelect defaultValue={blogPostsData?.category?.id} />
           </Form.Item>
           <Form.Item
             label="Tags"

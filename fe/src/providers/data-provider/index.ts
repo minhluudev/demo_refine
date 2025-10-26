@@ -9,51 +9,56 @@ const axiosInstance = axios.create({
 });
 
 export const dataProvider: DataProvider = {
-	// ✅ GET LIST (phân trang, sort, filter)
-	getList: async ({ resource, pagination, sorters, filters }) => {
-		const { currentPage = 1, pageSize = 10 } = pagination ?? {};
+  getList: async ({ resource, pagination, sorters, filters }) => {
+    const { currentPage = 1, pageSize = 10 } = pagination ?? {};
+    const query: Record<string, string> = {};
 
-		const response = await axiosInstance.get(`/${resource}`, {
-			params: {
-				page: currentPage,
-				per_page: pageSize,
-			},
-		});
+    console.log("filters", filters);
+		
+    filters?.forEach((filter: any) => {
+      if (filter.field && filter.value) {
+        query[filter.field] = filter.value;
+      }
+    });
 
-		const data = response.data.data ?? [];
-		const total = response.data.meta?.total ?? data.length;
+    const response = await axiosInstance.get(`/${resource}`, {
+      params: {
+        page: currentPage,
+        per_page: pageSize,
+        ...query,
+      },
+    });
 
-		return {
-			data,
-			total,
-		};
-	},
+    const data = response.data.data ?? [];
+    const total = response.data.meta?.total ?? data.length;
 
-	// ✅ GET ONE
-	getOne: async ({ resource, id }) => {
-		const response = await axiosInstance.get(`/${resource}/${id}`);
-		return { data: response.data.data ?? response.data };
-	},
+    return {
+      data,
+      total,
+    };
+  },
 
-	// ✅ CREATE
-	create: async ({ resource, variables }) => {
-		const response = await axiosInstance.post(`/${resource}`, variables);
-		return { data: response.data.data ?? response.data };
-	},
+  getOne: async ({ resource, id }) => {
+    const response = await axiosInstance.get(`/${resource}/${id}`);
+    return { data: response.data.data ?? response.data };
+  },
 
-	// ✅ UPDATE
-	update: async ({ resource, id, variables }) => {
-		const response = await axiosInstance.put(`/${resource}/${id}`, variables);
-		return { data: response.data.data ?? response.data };
-	},
+  create: async ({ resource, variables }) => {
+    const response = await axiosInstance.post(`/${resource}`, variables);
+    return { data: response.data.data ?? response.data };
+  },
 
-	// ✅ DELETE
-	deleteOne: async ({ resource, id }) => {
-		const response = await axiosInstance.delete(`/${resource}/${id}`);
-		return { data: response.data.data ?? response.data };
-	},
+  update: async ({ resource, id, variables }) => {
+    const response = await axiosInstance.put(`/${resource}/${id}`, variables);
+    return { data: response.data.data ?? response.data };
+  },
 
-	getApiUrl: function (): string {
-		throw new Error("Function not implemented.");
-	}
+  deleteOne: async ({ resource, id }) => {
+    const response = await axiosInstance.delete(`/${resource}/${id}`);
+    return { data: response.data.data ?? response.data };
+  },
+
+  getApiUrl: function (): string {
+    throw new Error("Function not implemented.");
+  },
 };

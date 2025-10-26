@@ -8,12 +8,15 @@ import {
   useTable,
 } from "@refinedev/antd";
 import type { BaseRecord } from "@refinedev/core";
-import { Space, Table } from "antd";
+import { Divider, Input, Space, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 
 export default function CategoryList() {
-  const { tableProps } = useTable({
-    syncWithLocation: true,
+  const { tableProps, setFilters } = useTable({
+    // syncWithLocation: true,
+    // filters: {
+    //   mode: "server",
+    // },
   });
 
   const columns: ColumnsType = [
@@ -42,7 +45,23 @@ export default function CategoryList() {
 
   return (
     <List>
-      <Table {...tableProps} columns={columns} loading={tableProps.loading}/>
+      <Input.Search
+        placeholder="Tìm bài viết..."
+        allowClear
+        onSearch={(value) => {
+          console.log(value);
+          setFilters([
+            {
+              field: "title",
+              operator: "eq",
+              value,
+            },
+          ]);
+        }}
+        style={{ width: 300 }}
+      />
+      <Divider />
+      <Table {...tableProps} columns={columns} loading={tableProps.loading} />
     </List>
   );
 }
