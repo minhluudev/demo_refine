@@ -64,16 +64,16 @@ export default async function RootLayout({
                         },
                       },
                     ]}
-                    accessControlProvider={{
-                      can: async ({
-                        resource,
-                        action,
-                        params,
-                      }): Promise<CanReturnType> => {
-                        // TODO: xử lý permission ở đây
-                        return { can: true };
-                      },
-                    }}
+                    // accessControlProvider={{
+                    //   can: async ({
+                    //     resource,
+                    //     action,
+                    //     params,
+                    //   }): Promise<CanReturnType> => {
+                    //     // TODO: xử lý permission ở đây
+                    //     return { can: true };
+                    //   },
+                    // }}
                     options={{
                       syncWithLocation: true,
                       warnWhenUnsavedChanges: true,
