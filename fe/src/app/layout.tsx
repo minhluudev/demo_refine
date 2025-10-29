@@ -1,16 +1,9 @@
-import { DevtoolsProvider } from "@providers/devtools";
-import { useNotificationProvider } from "@refinedev/antd";
-import { CanReturnType, GitHubBanner, Refine } from "@refinedev/core";
-import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
-import routerProvider from "@refinedev/nextjs-router";
+import { GitHubBanner } from "@refinedev/core";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 import React, { Suspense } from "react";
-
-import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { ColorModeContextProvider } from "@contexts/color-mode";
-import { dataProvider } from "@providers/data-provider";
 import "@refinedev/antd/dist/reset.css";
+import { RefineContext } from "./_refine_context";
 
 export const metadata: Metadata = {
   title: "Refine",
@@ -29,64 +22,19 @@ export default async function RootLayout({
   const theme = cookieStore.get("theme");
   const defaultMode = theme?.value === "dark" ? "dark" : "light";
 
+  // call api me
+  const me = {
+    permission: "admin",
+  };
+
   return (
     <html lang="en">
       <body>
         <Suspense>
           <GitHubBanner />
-          <RefineKbarProvider>
-            <AntdRegistry>
-              <ColorModeContextProvider defaultMode={defaultMode}>
-                <DevtoolsProvider>
-                  <Refine
-                    routerProvider={routerProvider}
-                    dataProvider={dataProvider}
-                    notificationProvider={useNotificationProvider}
-                    resources={[
-                      {
-                        name: "posts",
-                        list: "/blog-posts",
-                        create: "/blog-posts/create",
-                        edit: "/blog-posts/edit/:id",
-                        show: "/blog-posts/show/:id",
-                        meta: {
-                          canDelete: true,
-                        },
-                      },
-                      {
-                        name: "categories",
-                        list: "/categories",
-                        create: "/categories/create",
-                        edit: "/categories/edit/:id",
-                        show: "/categories/show/:id",
-                        meta: {
-                          canDelete: true,
-                        },
-                      },
-                    ]}
-                    // accessControlProvider={{
-                    //   can: async ({
-                    //     resource,
-                    //     action,
-                    //     params,
-                    //   }): Promise<CanReturnType> => {
-                    //     // TODO: xử lý permission ở đây
-                    //     return { can: true };
-                    //   },
-                    // }}
-                    options={{
-                      syncWithLocation: true,
-                      warnWhenUnsavedChanges: true,
-                      projectId: "OUGZXq-n7gy2N-6xX2O0",
-                    }}
-                  >
-                    {children}
-                    <RefineKbar />
-                  </Refine>
-                </DevtoolsProvider>
-              </ColorModeContextProvider>
-            </AntdRegistry>
-          </RefineKbarProvider>
+          <RefineContext defaultMode={defaultMode} meData={me}>
+            {children}
+          </RefineContext>
         </Suspense>
       </body>
     </html>
