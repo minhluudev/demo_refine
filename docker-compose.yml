@@ -1,0 +1,9 @@
+services:
+  be:
+    build:
+      context: .
+      dockerfile: docker/be/Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - ./be:/app
